@@ -12,6 +12,6 @@ developers := List(
   )
 )
 
-mainClass := Some("com.github.meckesl.CryptoTracker")
-
+resolvers += "jitpack" at "https://jitpack.io"
+libraryDependencies += "com.github.Philipinho" % "CoinGecko-Java" % "master-SNAPSHOT"
 libraryDependencies += "org.scalameta" %% "munit" % "0.7.29" % Test
