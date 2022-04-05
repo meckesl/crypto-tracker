@@ -11,6 +11,6 @@ class MySuite extends munit.FunSuite {
   test("coinlist") {
     val client = new CoinGeckoApiClientImpl
     val coinList = client.getCoinList
-    println(coinList)
+    println(s"${coinList.size()} coins found")
   }
 }
