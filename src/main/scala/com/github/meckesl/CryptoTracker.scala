@@ -8,23 +8,47 @@ import java.util.Date
 
 object CryptoTracker extends App {
 
+  def marketValue(c: CoinFullData, currency: String = "eur") =
+    c.getMarketData.getCurrentPrice.asScala(currency)
+
   val client = new CoinGeckoApiClientImpl
   val allCoins = client.getCoinList.asScala
-  println(allCoins.length + " coins in database")
 
-  case class Holding(symbol: String, value: Double)
-  case class Result(symbol: String, USDValue: Double, date: Date)
+  case class Holding(symbol: String, amount: Double)
 
-  def USDValue(c: CoinFullData) = c.getTickers.asScala.filter(_.getTarget.toUpperCase.equals("USD")).headOption.map(_.getLast).getOrElse(Double.NaN)
+  val holdings: Seq[Holding] =
+    Seq(
+      Holding("btc", 0.031077),
+      Holding("mana", 18),
+      Holding("near", 12.85),
+      Holding("theta", 87.47),
+      Holding("dock", 2200),
+      Holding("dot", 20.06),
+      Holding("sand", 61),
+      Holding("dot", 13.38),
+      Holding("bnb", 0.2388),
+      Holding("dock", 79),
+      Holding("sol", 3),
+      Holding("ada", 299.5),
+      Holding("sand", 50),
+      Holding("cake", 10),
+      Holding("near", 25),
+      Holding("ada", 200),
+      Holding("dot", 10),
+      Holding("luna", 5),
+      Holding("bnb", 1.026),
+      Holding("btc", 0.00936),
+      Holding("ftm", 500)
+    )
 
-  val coins = Seq(Holding("BTC", 1), Holding("DOT", 2))
+  val res = (
+    holdings
+      .map(h => (h, allCoins.filter(_.getSymbol.toLowerCase.equals(h.symbol.toLowerCase)).head))
+      .map(h => (h._1, client.getCoinById(h._2.getId)))
+      .map(h => Holding(h._1.symbol, h._1.amount * marketValue(h._2)))
+  )
 
-  val results =
-    coins
-      .map(c=> allCoins.filter(_.getSymbol.toLowerCase.equals(c.symbol.toLowerCase)).head)
-      .map(d=> client.getCoinById(d.getId))
-      .map(e=> Result(e.getSymbol, USDValue(e), new Date))
-
-  print(results.mkString("\n"))
+  println(res.mkString("\n"))
+  println(s"Total=${res.foldLeft(0.0){(acc, num) => acc + (num.amount)}}")
 
 }
