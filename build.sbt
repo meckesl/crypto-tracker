@@ -17,8 +17,6 @@ fork := true
 
 resolvers += "jitpack" at "https://jitpack.io"
 libraryDependencies += "com.github.Philipinho" % "CoinGecko-Java" % "master-SNAPSHOT"
-
-// https://mvnrepository.com/artifact/org.openjfx/javafx
 libraryDependencies += "org.openjfx" % "javafx" % "18" pomOnly()
 libraryDependencies ++= {
   lazy val osName = System.getProperty("os.name") match {
