@@ -1,6 +1,7 @@
+import scala.io._
 name := "crypto-tracker"
-version := "0.1.0-SNAPSHOT"
-scalaVersion := "3.1.1"
+version := Source.fromFile(s"${baseDirectory.value.getAbsolutePath}/version").mkString.trim
+scalaVersion := "3.1.2"
 organization := "com.github.meckesl"
 homepage := Some(url("https://github.com/meckesl/crypto-tracker"))
 developers := List(
@@ -12,10 +13,13 @@ developers := List(
   )
 )
 
+fork := true
+
 resolvers += "jitpack" at "https://jitpack.io"
 libraryDependencies += "com.github.Philipinho" % "CoinGecko-Java" % "master-SNAPSHOT"
-libraryDependencies += "org.scalafx" %% "scalafx" % "16.0.0-R24"
 
+// https://mvnrepository.com/artifact/org.openjfx/javafx
+libraryDependencies += "org.openjfx" % "javafx" % "18" pomOnly()
 libraryDependencies ++= {
   lazy val osName = System.getProperty("os.name") match {
     case n if n.startsWith("Linux") => "linux"
@@ -24,7 +28,7 @@ libraryDependencies ++= {
     case _ => throw new Exception("Unknown platform!")
   }
   Seq("base", "controls", "fxml", "graphics", "media", "swing", "web")
-    .map(m => "org.openjfx" % s"javafx-$m" % "18" classifier "win-x86")
+    .map(m => "org.openjfx" % s"javafx-$m" % "18" classifier osName)
 }
 
 libraryDependencies += "org.scalameta" %% "munit" % "0.7.29" % Test

@@ -19,17 +19,17 @@ object CryptoTracker extends App {
   val holdings: Seq[Holding] =
     Seq(
       Holding("btc", 0.031077),
-      Holding("mana", 18),
+      Holding("mana", 19),
       Holding("near", 12.85),
       Holding("theta", 87.47),
       Holding("dock", 2200),
-      Holding("dot", 20.06),
+      Holding("ada", 150),
+      Holding("dot", 20.07),
       Holding("sand", 61),
       Holding("dot", 13.38),
       Holding("bnb", 0.2388),
       Holding("dock", 79),
       Holding("sol", 3),
-      Holding("ada", 299.5),
       Holding("sand", 50),
       Holding("cake", 10),
       Holding("near", 25),
@@ -52,6 +52,6 @@ object CryptoTracker extends App {
       .reverse
 
   println(res.mkString("\n"))
-  println(s"Total=${res.foldLeft(0.0){(acc, num) => acc + (num.amount)}}")
+  println(s"Total=${res.foldLeft(0.0){(acc, h) => acc + h.amount}}")
 
 }
