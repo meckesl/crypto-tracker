@@ -14,16 +14,14 @@ object CryptoTracker extends App {
   val client = new CoinGeckoApiClientImpl
   val allCoins = client.getCoinList.asScala
 
-  case class Holding(symbol: String, amount: Double)
-
-  val holdings: Seq[Holding] =
+  lazy val holdings: Seq[Holding] =
     Seq(
       Holding("btc", 0.031077),
       Holding("mana", 19),
       Holding("near", 12.85),
     )
 
-  val res =
+  def res(holdings: Seq[Holding]) =
     holdings
       .groupBy(_.symbol).map { case (s,a) => Holding(s, a.map(_.amount).sum) }
       .map(h => (h, allCoins.filter(_.getSymbol.toLowerCase.equals(h.symbol.toLowerCase)).head))
@@ -33,7 +31,8 @@ object CryptoTracker extends App {
       .sortBy(_.amount)
       .reverse
 
-  println(res.mkString("\n"))
-  println(s"Total=${res.foldLeft(0.0){(acc, h) => acc + h.amount}}")
+  val result = res(holdings)
+  println(result.mkString("\n"))
+  println(s"Total=${result.foldLeft(0.0){(acc, h) => acc + h.amount}}")
 
 }
