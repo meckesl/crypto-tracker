@@ -1,4 +1,4 @@
-import scala.io._
+import scala.io.*
 name := "crypto-tracker"
 version := Source.fromFile(s"${baseDirectory.value.getAbsolutePath}/version").mkString.trim
 scalaVersion := "3.1.2"
@@ -17,7 +17,7 @@ fork := true
 
 resolvers += "jitpack" at "https://jitpack.io"
 libraryDependencies += "com.github.Philipinho" % "CoinGecko-Java" % "master-SNAPSHOT"
-libraryDependencies += "org.openjfx" % "javafx" % "18" pomOnly()
+/*libraryDependencies += "org.openjfx" % "javafx" % "18" pomOnly()
 libraryDependencies ++= {
   lazy val osName = System.getProperty("os.name") match {
     case n if n.startsWith("Linux") => "linux"
@@ -27,6 +27,6 @@ libraryDependencies ++= {
   }
   Seq("base", "controls", "fxml", "graphics", "media", "swing", "web")
     .map(m => "org.openjfx" % s"javafx-$m" % "18" classifier osName)
-}
+}*/
 
-libraryDependencies += "org.scalameta" %% "munit" % "0.7.29" % Test
+libraryDependencies += "org.scalameta" %% "munit" % "1.0.0" % Test
