@@ -1,5 +1,6 @@
 package com.github.meckesl
 
+import com.github.meckesl.model.Holding
 import com.litesoftwares.coingecko.domain.Coins.CoinFullData
 import com.litesoftwares.coingecko.impl.CoinGeckoApiClientImpl
 
@@ -26,12 +27,12 @@ object CryptoTracker extends App {
       .groupBy(_.symbol).map { case (s,a) => Holding(s, a.map(_.amount).sum) }
       .map(h => (h, allCoins.filter(_.getSymbol.toLowerCase.equals(h.symbol.toLowerCase)).head))
       .map(h => (h._1, client.getCoinById(h._2.getId)))
-      .map(h => Holding(h._1.symbol, h._1.amount * marketValue(h._2)))
+      .map((h, v) => Holding(h.symbol, h.amount * marketValue(v)))
       .toList
       .sortBy(_.amount)
       .reverse
 
-  val result = res(holdings)
+  private val result = res(holdings)
   println(result.mkString("\n"))
   println(s"Total=${result.foldLeft(0.0){(acc, h) => acc + h.amount}}")
 

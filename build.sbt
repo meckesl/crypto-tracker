@@ -20,3 +20,4 @@ resolvers += "jitpack" at "https://jitpack.io"
 libraryDependencies += "com.github.Philipinho" % "CoinGecko-Java" % "master-SNAPSHOT"
 libraryDependencies += "org.postgresql" % "postgresql" % "42.7.3"
 libraryDependencies += "org.scalameta" %% "munit" % "1.0.0" % Test
+libraryDependencies += "com.typesafe.akka" %% "akka-actor-typed" % "2.8.5"
