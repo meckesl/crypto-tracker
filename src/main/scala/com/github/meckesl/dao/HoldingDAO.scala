@@ -4,10 +4,10 @@ import com.github.meckesl.model.Holding
 
 import java.sql.*
 
-object HoldingDAO {
+object HoldingDAO extends AbstractDAO {
 
   def insertData(holdings: Seq[Holding], user: String, date: Date): Unit = {
-    val connection = DBConfig.getConnection
+    val connection = getConnection
     val statement = connection.createStatement
 
     holdings.foreach { h =>

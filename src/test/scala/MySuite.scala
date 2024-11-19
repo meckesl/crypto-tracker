@@ -1,11 +1,7 @@
-import com.litesoftwares.coingecko.CoinGeckoApiClient
 import com.litesoftwares.coingecko.constant.Currency
-import com.litesoftwares.coingecko.domain.Coins.CoinList
 import com.litesoftwares.coingecko.impl.CoinGeckoApiClientImpl
 
-import java.util
-import java.util.List
-import scala.jdk.CollectionConverters._
+import scala.jdk.CollectionConverters.*
 
 // For more information on writing tests, see
 // https://scalameta.org/munit/docs/getting-started.html
@@ -14,8 +10,8 @@ class MySuite extends munit.FunSuite {
   val client = new CoinGeckoApiClientImpl
 
   test("coinlist") {
-    val coinList = client.getCoinList
-    println(s"${coinList.size()} coins found")
+    val coinList = client.getCoinList.asScala
+    println(s"${coinList.length} coins found")
   }
 
   test("eurMarkets") {

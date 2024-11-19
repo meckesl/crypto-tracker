@@ -11,7 +11,8 @@ object Scheduler extends App {
 
   import system.dispatcher
 
-  system.scheduler.scheduleAtFixedRate(0.day, 1.day, holdingsActor, "dailyRefresh")
+  system.scheduler
+    .scheduleAtFixedRate(0.day, 1.day, holdingsActor, "dailyRefresh")
 
 }
 

@@ -5,7 +5,7 @@ import com.litesoftwares.coingecko.domain.Coins.CoinFullData
 import com.litesoftwares.coingecko.impl.CoinGeckoApiClientImpl
 
 import scala.jdk.CollectionConverters.*
-import java.util.Date
+import scala.math.BigDecimal.RoundingMode
 
 object CryptoTracker extends App {
 
@@ -33,7 +33,14 @@ object CryptoTracker extends App {
       .reverse
 
   private val result = res(holdings)
+
+  println("Assets")
+  println("-----------------------")
   println(result.mkString("\n"))
-  println(s"Total=${result.foldLeft(0.0){(acc, h) => acc + h.amount}}")
+  println("")
+  println(s"Total = €${
+    result.foldLeft(BigDecimal(0.0)){ (acc, h) =>
+      acc + h.amount}.setScale(2, RoundingMode.HALF_UP)
+  }")
 
 }
